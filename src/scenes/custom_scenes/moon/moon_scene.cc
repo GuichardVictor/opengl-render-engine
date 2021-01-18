@@ -147,7 +147,7 @@ void CustomScene::setup()
 
     update_sphere_heights();
 
-    auto texture_id = Texture::from_file("./assets/rock_texture_2.png", Image::color_type::RGB, GL_REPEAT, GL_REPEAT);
+    auto texture_id = Texture::from_file("./assets/moon_noise.png", Image::color_type::RGB, GL_REPEAT, GL_REPEAT);
 
     planet = Planet(sphere_mesh, default_shader);
     planet.uniform.shading.specular = 0;
