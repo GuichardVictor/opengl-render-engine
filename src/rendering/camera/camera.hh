@@ -17,7 +17,7 @@ struct Camera
         : position{position_}, look_at{look_at_}, up_vector{up}
     {}
 
-    glm::mat4 view_matrix() const { return glm::lookAt(look_at, position, up_vector); }
+    glm::mat4 view_matrix() const { return glm::lookAt(position, look_at, up_vector); }
     glm::mat4 perspective_matrix() const;
 
     glm::vec3 view_direction() const { return -glm::transpose(view_matrix())[2]; }
@@ -26,6 +26,7 @@ struct Camera
     void rotate(float dtheta, float dphi);
     void pan(float dx, float dy);
     void zoom(float d);
+    void update_position();
 
     glm::vec3 position;
     glm::vec3 look_at;
@@ -33,9 +34,14 @@ struct Camera
 
     float theta = 0;
     float phi = 0;
+    float radius = 5;
 
     // Perspective info
-    float angle_of_view = 90.0f * M_PI / 180;
+#ifdef GLM_FORCE_RADIANS 
+    float angle_of_view = 60.0f * M_PI / 180;
+#else
+    float angle_of_view = 120.0f;
+#endif
     float image_aspect = 1;
     float z_near = 0;
     float z_far = 1;
