@@ -21,7 +21,7 @@ uniform vec3 scale;
 
 void main(void)
 {
-    mat4 M = view;
+    mat4 M = perspective * view;
 
     vec4 origin = (vertex[0].position + vertex[1].position + vertex[2].position) / 3.0;
     gl_Position = M*origin;

@@ -19,7 +19,7 @@ uniform mat4 perspective;
 
 void main(void)
 {
-    mat4 M = view;
+    mat4 M = perspective * view;
 
     gl_Position = M*vertex[0].position;
     EmitVertex();

@@ -41,5 +41,5 @@ void main()
     vec4 position_transformed = R*S*position + T;
 
     fragment.position = position_transformed;
-    gl_Position = view * position_transformed;
+    gl_Position = perspective * view * position_transformed;
 }
