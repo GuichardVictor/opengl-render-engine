@@ -37,6 +37,11 @@ int main()
     glfwSetMouseButtonCallback(gui.window, on_mouse_click);
     glfwSetScrollCallback(gui.window, on_scrollwheel);
 
+    // Setup Scene camera
+    int width, height;
+    glfwGetWindowSize(gui.window, &width, &height);
+    current_scene.camera.image_aspect = width / static_cast<float>(height);;
+
     // load shaders
     current_scene.load_shaders();
 

@@ -141,7 +141,7 @@ void CustomScene::update_sphere_heights()
 
 void CustomScene::setup()
 {
-    const int RESOLUTION = 7; // higher than 6 will take a lot of time to re compute normals
+    const int RESOLUTION = 7; // higher than 7 will take a lot of time to re compute normals
     sphere_mesh = mesh_icosphere(RESOLUTION);
     sphere_mesh_cached = Mesh(sphere_mesh);
 
@@ -150,13 +150,12 @@ void CustomScene::setup()
     auto texture_id = Texture::from_file("./assets/rock_texture_2.png", Image::color_type::RGB, GL_REPEAT, GL_REPEAT);
 
     planet = Planet(sphere_mesh, default_shader);
-    planet.uniform.transform.scale = {0.4, 0.4, 0.4};
     planet.uniform.shading.specular = 0;
+    planet.uniform.transform.scale = {1.0, 0.8, 1.0}; // planet y scale is reduced to give the oval shape of a planet.
     planet.texture = texture_id;
 
     quad = MeshRenderer(mesh_quad({-1, 0, -1}, {1, 0, -1}, {1, 0, 1}, {-1, 0, 1}), wireframe_shader);
     quad.uniform.color = {0.8, 0.8, 0.8};
-    quad.uniform.transform.scale = {0.5, 0.5, 0.5};
     quad.texture = texture_id;
 }
 
