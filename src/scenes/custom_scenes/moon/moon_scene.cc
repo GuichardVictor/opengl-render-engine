@@ -96,6 +96,8 @@ void CustomScene::update_gpu_sphere_data()
 
 void CustomScene::update_sphere_heights()
 {
+    const int NUM_WORK_GROUP = 512;
+
     SSBO ssbo(sizeof(glm::vec4) * sphere_mesh.positions.size());
 
     std::vector<glm::vec4> ssbo_data;
@@ -123,7 +125,7 @@ void CustomScene::update_sphere_heights()
     
     auto start = std::chrono::high_resolution_clock::now();
 
-    cp_shader.dispatch(512);
+    cp_shader.dispatch(NUM_WORK_GROUP);
     cp_shader.wait_for(GL_SHADER_STORAGE_BARRIER_BIT);
     
     auto heights = ssbo.retreive_data<glm::vec4>((int)(sphere_mesh.positions.size()));
