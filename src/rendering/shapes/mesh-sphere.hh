@@ -8,6 +8,11 @@
 
 #include "src/math/math.hh"
 
+/*
+* This part is a readaptation of: https://github.com/libigl/eigen/blob/master/demos/opengl/icosphere.cpp
+* Code is simplified, cleaned and readapted for glm and modern c++.
+*/
+
 /*  Taken from: https://fr.wikipedia.org/wiki/Icosa%C3%A8dre
 **
 **  Static icosahedron informations
