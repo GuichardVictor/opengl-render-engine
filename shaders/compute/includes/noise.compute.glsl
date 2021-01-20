@@ -1,39 +1,6 @@
 #version 450 core
 #include "simplex_noise.compute.glsl"
 
-float noise(vec3 value, int num_layers, float scale, float persistence, float lacunarity, float multiplier)
-{
-    float noise_value;
-    float amplitude = 1;
-    float frequency = scale;
-    
-    for (int i = 0; i < num_layers; i++)
-    {
-        noise_value += snoise(value * frequency);
-        amplitude *= persistence;
-        frequency *= lacunarity;
-    }
-
-    return noise_value * multiplier;
-}
-
-float noise(vec3 value, float scale, float multiplier)
-{
-    const int num_layers = 4;
-    const float persistence = 0.5;
-    const float lacunarity = 2;
-
-    return noise(value, num_layers, scale, persistence, lacunarity, multiplier);
-}
-
-float noise(vec3 value)
-{
-    const float scale = 1;
-    const float multiplier = 1;
-
-    return noise(value, scale, multiplier);
-}
-
 float noise(vec3 value, vec4 parameters[3])
 {
     // Noise Parameters
