@@ -38,9 +38,11 @@ struct CustomScene : Scene
     void update_sphere_heights();
     void update_gpu_sphere_data();
 
+    float min = 100;
+    float max = 0;
+
     long long last_update_time = 0;
     bool debug_mode = false;
     bool display_ground = false;
-    int selected_texture_map_id = 0;
     std::vector<std::string> texture_keys;
 };

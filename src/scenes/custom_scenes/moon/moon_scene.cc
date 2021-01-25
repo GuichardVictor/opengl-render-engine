@@ -154,7 +154,18 @@ void CustomScene::update_sphere_heights()
     // Unbind ssbo buffers
     SSBO::unbind();
 
-    std::transform(heights.begin(), heights.end(), sphere_mesh.positions.begin(), sphere_mesh.positions.begin(), [](glm::vec4& v, glm::vec3& p) { return v.w * p;});
+    float min = 100;
+    float max = -100;
+
+    std::transform(heights.begin(), heights.end(), sphere_mesh.positions.begin(), sphere_mesh.positions.begin(),
+                   [&min, &max](glm::vec4& v, glm::vec3& p) {
+                       min = std::min(min, v.w);
+                       max = std::max(max, v.w);
+                       return v.w * p;
+                   });
+    
+    this->min = min;
+    this->max = max;
 
     Mesh::recalculate_normals(sphere_mesh, true);
     
