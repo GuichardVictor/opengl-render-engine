@@ -10,6 +10,8 @@
 
 #include "settings/settings.hh"
 
+#include <map>
+
 struct CustomScene : Scene
 {
     // Required
@@ -31,9 +33,14 @@ struct CustomScene : Scene
     Shader normal_disp_shader;
     ComputeShader cp_shader;
 
+    std::map<std::string, GLuint> textures;
+
     void update_sphere_heights();
     void update_gpu_sphere_data();
 
     long long last_update_time = 0;
     bool debug_mode = false;
+    bool display_ground = false;
+    int selected_texture_map_id = 0;
+    std::vector<std::string> texture_keys;
 };

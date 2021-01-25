@@ -4,6 +4,15 @@
 #include <algorithm>
 #include <chrono>
 
+// https://eliasdaler.github.io/using-imgui-with-sfml-pt2/
+static auto vector_getter = [](void* vec, int idx, const char** out_text)
+{
+    auto& vector = *static_cast<std::vector<std::string>*>(vec);
+    if (idx < 0 || idx >= static_cast<int>(vector.size())) { return false; }
+    *out_text = vector.at(idx).c_str();
+    return true;
+};
+
 
 void CustomScene::set_gui()
 {
@@ -12,6 +21,7 @@ void CustomScene::set_gui()
     ImGui::Text("%s", "Shape Editor Settings");
     ImGui::Text("Last Sphere Update Time: %dms", last_update_time);
     ImGui::Checkbox("Debug", &debug_mode);
+    ImGui::Checkbox("Display Plane", &display_ground);
 
     ImGui::Dummy(ImVec2(0.0f, 20.0f));
 
@@ -20,6 +30,20 @@ void CustomScene::set_gui()
         ImGui::Checkbox("Use Texture##shade_settings", &planet.use_texture);
         ImGui::SliderFloat("Scale##shade_settings", &planet.texture_scaling, 0.5f, 10.0f);
         ImGui::SliderFloat("Sharpness##shade_settings", &planet.blend_sharpness, 0.1f, 5.0f);
+
+        static int current_item = 0;
+        static int previous_item = current_item;
+        ImGui::ListBox("Texture", &current_item, vector_getter,
+                       static_cast<void*>(&texture_keys), static_cast<int>(texture_keys.size()));
+        
+        if (previous_item != current_item)
+        {
+            previous_item = current_item;
+            auto it = textures.begin();
+            std::advance(it, current_item);
+
+            planet.texture = it->second;
+        }
     }
 
     ImGui::Dummy(ImVec2(0.0f, 20.0f));
@@ -149,16 +173,25 @@ void CustomScene::setup()
 
     update_sphere_heights();
 
-    auto texture_id = Texture::from_file("./assets/moon_noise.png", Image::color_type::RGB, GL_REPEAT, GL_REPEAT);
+    textures.insert({
+        "moon_noise", Texture::from_file("./assets/moon_noise.png", Image::color_type::RGB, GL_REPEAT, GL_REPEAT)
+    });
+    textures.insert({
+        "rock_texture", Texture::from_file("./assets/rock_texture_2.png", Image::color_type::RGB, GL_REPEAT, GL_REPEAT)
+    });
+    textures.insert({
+        "checker", Texture::from_file("./assets/checker.png", Image::color_type::RGB, GL_REPEAT, GL_REPEAT)
+    });
+
+    transform(textures.begin(), textures.end(), back_inserter(texture_keys), [](std::pair<std::string, GLuint> p) { return p.first; });
 
     planet = Planet(sphere_mesh, default_shader);
     planet.uniform.shading.specular = 0;
     planet.uniform.transform.scale = {1.0, 0.8, 1.0}; // planet y scale is reduced to give the oval shape of a planet.
-    planet.texture = texture_id;
+    planet.texture = textures["moon_noise"];
 
     quad = MeshRenderer(mesh_quad({-1, 0, -1}, {1, 0, -1}, {1, 0, 1}, {-1, 0, 1}), wireframe_shader);
     quad.uniform.color = {0.8, 0.8, 0.8};
-    quad.texture = texture_id;
 }
 
 void CustomScene::draw()
@@ -178,7 +211,8 @@ void CustomScene::draw()
         });
     }
 
-    quad.draw(camera);
+    if (display_ground)
+        quad.draw(camera);
 }
 
 void CustomScene::load_shaders()
