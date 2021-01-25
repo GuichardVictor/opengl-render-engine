@@ -38,11 +38,8 @@ void CustomScene::set_gui()
         
         if (previous_item != current_item)
         {
+            planet.texture = textures[texture_keys[current_item]];
             previous_item = current_item;
-            auto it = textures.begin();
-            std::advance(it, current_item);
-
-            planet.texture = it->second;
         }
     }
 
