@@ -24,7 +24,7 @@ uniform float texture_scaling = 1;
 uniform float texture_sharpness = 1;
 uniform int use_texture;
 
-vec3 light = vec3(camera_position.x, camera_position.y, camera_position.z);
+uniform vec3 light = vec3(0.0, 1.0, 0.0);
 
 vec3 pow_vec(vec3 v, float e)
 {

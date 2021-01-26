@@ -19,4 +19,6 @@ struct Planet : public MeshRenderer
     float texture_scaling = 1;
     float blend_sharpness = 1;
     bool use_texture = true;
+    bool fixed_light = false;
+    glm::vec3 fixed_light_position = {0, 1, 0};
 };

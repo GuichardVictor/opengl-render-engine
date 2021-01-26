@@ -28,6 +28,7 @@ void CustomScene::set_gui()
     if (ImGui::CollapsingHeader("Shade settings", ImGuiTreeNodeFlags_DefaultOpen))
     {
         ImGui::Checkbox("Use Texture##shade_settings", &planet.use_texture);
+        ImGui::Checkbox("Fix Light##shader_settings", &planet.fixed_light);
         ImGui::SliderFloat("Scale##shade_settings", &planet.texture_scaling, 0.5f, 10.0f);
         ImGui::SliderFloat("Sharpness##shade_settings", &planet.blend_sharpness, 0.1f, 5.0f);
 
@@ -212,10 +213,12 @@ void CustomScene::draw()
         planet.draw(camera, wireframe_shader);
     } else 
     {
+        if (!planet.fixed_light) { planet.fixed_light_position = camera.position; }
         planet.draw(camera, [this](Shader& shader) {
             shader.set_uniform("texture_scaling", this->planet.texture_scaling);
             shader.set_uniform("texture_sharpness", this->planet.blend_sharpness);
             shader.set_uniform("use_texture", (int)this->planet.use_texture);
+            shader.set_uniform("light", this->planet.fixed_light_position);
         });
     }
 
