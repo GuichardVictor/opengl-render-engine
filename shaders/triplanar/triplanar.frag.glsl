@@ -49,11 +49,11 @@ vec4 triplanarMapping (sampler2D texture, vec3 normal, vec3 position, float scal
     center *= scale;
     center += 0.5;
 
-	vec4 xColor = texture2D(texture, center.yz);
-	vec4 yColor = texture2D(texture, center.xz);
-	vec4 zColor = texture2D(texture, center.xy);
+	vec4 x_color = texture2D(texture, center.yz);
+	vec4 y_color = texture2D(texture, center.xz);
+	vec4 z_color = texture2D(texture, center.xy);
 
-    return (xColor * normalBlend.x + yColor * normalBlend.y + zColor * normalBlend.z);
+    return (x_color * normalBlend.x + y_color * normalBlend.y + z_color * normalBlend.z);
 }
 
 void main()
