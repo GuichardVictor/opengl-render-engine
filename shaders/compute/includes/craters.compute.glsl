@@ -25,23 +25,27 @@ uniform float rim_steepness;
 uniform float rim_width;
 
 
+// https://www.iquilezles.org/www/articles/smin/smin.htm
+float smooth_function(float a, float b, float k)
+{
+    float h = clamp( 0.5+0.5*(b-a)/k, 0.0, 1.0 );
+    return mix( b, a, h ) - k*h*(1.0-h);
+}
+
 // Smooth minimum of two values, controlled by smoothing factor k
-// When k = 0, this behaves identically to min(a, b)
-float smooth_min(float a, float b, float k)
+// When k = 0 => min(a, b)
+float smooth_min( float a, float b, float k )
 {
     k = max(0, k);
-    // https://www.iquilezles.org/www/articles/smin/smin.htm
-    float h = max(0, min(1, (b - a + k) / (2 * k)));
-    return a * h + b * (1 - h) - k * h * (1 - h);
+    return smooth_function(a, b, k);
 }
 
 // Smooth maximum of two values, controlled by smoothing factor k
-// When k = 0, this behaves identically to max(a, b)
+// When k = 0 => max(a, b)
 float smooth_max(float a, float b, float k)
 {
     k = min(0, -k);
-    float h = max(0, min(1, (b - a + k) / (2 * k)));
-    return a * h + b * (1 - h) - k * h * (1 - h);
+    return smooth_function(a, b, k);
 }
 
 
@@ -59,6 +63,7 @@ float compute_crater_depth(vec3 vertex_pos)
         float rimX = min(x - 1 - rim_width, 0);
         float rim_shape = rim_steepness * rimX * rimX;
 
+        // Smoothing between cavity, rim and floor
 		float crater_shape = smooth_max(cavity_shape, craters[i].floor_height, craters[i].smoothness);
 		crater_shape = smooth_min(crater_shape, rim_shape, craters[i].smoothness);
 
