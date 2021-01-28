@@ -1,15 +1,17 @@
 #include "math.hh"
 
+#include <cmath>
+
 glm::vec3 slerp(const glm::vec3& start, const glm::vec3& end, float t)
 {
     t = clamp<float>(t, 0, 1);
     auto dot = glm::dot(start, end);
     dot = clamp<float>(dot, -1, 1);
-    float theta = std::acosf(dot) * t;
+    float theta = acosf(dot) * t;
     glm::vec3 relative_vector = end - start * dot;
     relative_vector = glm::normalize(relative_vector);
 
-    return ((start * std::cosf(theta)) + (relative_vector*std::sinf(theta)));
+    return ((start * cosf(theta)) + (relative_vector*sinf(theta)));
 }
 
 glm::vec3 random_on_sphere()

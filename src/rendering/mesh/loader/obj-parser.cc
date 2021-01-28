@@ -7,19 +7,23 @@
 #include <array>
 #include <map>
 
+#ifdef WIN32 || _WIN32 || __WIN32
+    #define sscanf sscanf_s
+#endif
+
 glm::uvec3 extract_face_index(std::string const& word, const ObjParser::obj_info_type& type)
 {
     glm::uvec3 indices = {0,0,0};
 
 
     if(type == ObjParser::obj_info_type::vertex)
-        sscanf_s(word.c_str(), "%d", &indices[0]);
+        sscanf(word.c_str(), "%d", &indices[0]);
     else if( type==ObjParser::obj_info_type::vertex_texture )
-        sscanf_s(word.c_str(), "%d/%d", &indices[0], &indices[1]);
+        sscanf(word.c_str(), "%d/%d", &indices[0], &indices[1]);
     else if( type==ObjParser::obj_info_type::vertex_normal )
-        sscanf_s(word.c_str(), "%d//%d", &indices[0], &indices[2]);
+        sscanf(word.c_str(), "%d//%d", &indices[0], &indices[2]);
     else if( type==ObjParser::obj_info_type::vertex_texture_normal )
-        sscanf_s(word.c_str(), "%d/%d/%d", &indices[0], &indices[1], &indices[2]);
+        sscanf(word.c_str(), "%d/%d/%d", &indices[0], &indices[1], &indices[2]);
 
     for(int k=0; k<3; ++k)
         indices[k]--;    // obj indices starts at 1
