@@ -271,11 +271,12 @@ static std::string handle_shader_include(const std::string& filepath, std::set<s
 ComputeShader::ComputeShader(const std::string& filepath, bool handle_include)
 {
     std::string compute_shader_source;
+    auto include_set = std::set<std::string>{};
     
     if (!handle_include)
         compute_shader_source = read_file(filepath);
     else
-        compute_shader_source = handle_shader_include(filepath, std::set<std::string>{});
+        compute_shader_source = handle_shader_include(filepath, include_set);
 
     const auto cp_shader = compile_shader(compute_shader_source, GL_COMPUTE_SHADER);
 
