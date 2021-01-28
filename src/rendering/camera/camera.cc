@@ -1,6 +1,7 @@
 #include "camera.hh"
 
 #include <algorithm>
+#include <cmath>
 
 Camera::Camera()
 {
@@ -20,9 +21,9 @@ glm::mat4 Camera::perspective_matrix() const
 void Camera::update_position()
 {
     // Convert to carthesian
-    float x = radius * std::sinf(phi) * std::sinf(theta);
-    float y = radius * std::cosf(phi);
-    float z = radius * std::sinf(phi) * std::cosf(theta);
+    float x = radius * sinf(phi) * sinf(theta);
+    float y = radius * cosf(phi);
+    float z = radius * sinf(phi) * cosf(theta);
 
     position = glm::vec3(x,y,z);
 }
