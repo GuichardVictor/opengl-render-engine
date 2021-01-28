@@ -1,6 +1,6 @@
 
 cmake_minimum_required(VERSION 2.8)
-project(pgm)
+project(moon_generator)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -38,14 +38,14 @@ file(
     third_party/*.[ch]pp
     third_party/*.[ch]
     )
-add_executable(pgm ${source_files})
+add_executable(moon_generator ${source_files})
 
 
 if(UNIX)
-    target_link_libraries(pgm glfw dl -static-libstdc++)
+    target_link_libraries(moon_generator glfw dl -static-libstdc++)
 endif()
 
 if(WIN32)
     source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${source_files}) # Allow to explore source directories as a tree
-    target_link_libraries(pgm ${GLFW_LIBRARIES})
+    target_link_libraries(moon_generator ${GLFW_LIBRARIES})
 endif()
