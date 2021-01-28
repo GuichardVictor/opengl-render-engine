@@ -33,12 +33,12 @@ vec3 pow_vec(vec3 v, float e)
 
 vec3 blendNormal(vec3 normal)
 {
-	vec3 blending = normal * normal;
+    vec3 blending = normal * normal;
 
     blending = pow_vec(blending, texture_sharpness);
 
-	blending /= vec3(blending.x + blending.y + blending.z);
-	return blending;
+    blending /= vec3(blending.x + blending.y + blending.z);
+    return blending;
 }
 
 vec4 triplanarMapping (sampler2D texture, vec3 normal, vec3 position, float scale)
@@ -49,9 +49,9 @@ vec4 triplanarMapping (sampler2D texture, vec3 normal, vec3 position, float scal
     center *= scale;
     center += 0.5;
 
-	vec4 x_color = texture2D(texture, center.yz);
-	vec4 y_color = texture2D(texture, center.xz);
-	vec4 z_color = texture2D(texture, center.xy);
+    vec4 x_color = texture2D(texture, center.yz);
+    vec4 y_color = texture2D(texture, center.xz);
+    vec4 z_color = texture2D(texture, center.xy);
 
     return (x_color * normalBlend.x + y_color * normalBlend.y + z_color * normalBlend.z);
 }

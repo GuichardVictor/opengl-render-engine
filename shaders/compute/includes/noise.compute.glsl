@@ -9,11 +9,11 @@ float noise(vec3 value, vec4 parameters[3])
     float persistence = parameters[1].x;
     float lacunarity = parameters[1].y;
     float scale = parameters[1].z;
-	float multiplier = parameters[1].w;
-	float vertical_shift = parameters[2].x; // parameters[2].yzw is for padding
+    float multiplier = parameters[1].w;
+    float vertical_shift = parameters[2].x; // parameters[2].yzw is for padding
 
     // Sum up noise layers
-	float noise_value = 0;
+    float noise_value = 0;
     float amplitude = 1;
     float frequency = scale;
     float ridgeWeight = 1;
@@ -38,13 +38,13 @@ float ridgid_noise(vec3 value, vec4 parameters[3])
     float persistence = parameters[1].x;
     float lacunarity = parameters[1].y;
     float scale = parameters[1].z;
-	float multiplier = parameters[1].w;
-	float power = parameters[2].x;
+    float multiplier = parameters[1].w;
+    float power = parameters[2].x;
     float gain = parameters[2].y;
     float vertical_shift = parameters[2].z; // parameters[2].w is for padding
 
-	// Sum up noise layers
-	float noise_value = 0;
+    // Sum up noise layers
+    float noise_value = 0;
     float amplitude = 1;
     float frequency = scale;
     float ridgeWeight = 1;
@@ -61,7 +61,7 @@ float ridgid_noise(vec3 value, vec4 parameters[3])
         frequency *= lacunarity;
     }
 
-	return noise_value * multiplier + vertical_shift;    
+    return noise_value * multiplier + vertical_shift;    
 }
 
 

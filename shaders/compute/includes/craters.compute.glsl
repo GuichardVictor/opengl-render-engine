@@ -64,8 +64,8 @@ float compute_crater_depth(vec3 vertex_pos)
         float rim_shape = rim_steepness * rimX * rimX;
 
         // Smoothing between cavity, rim and floor
-		float crater_shape = smooth_max(cavity_shape, craters[i].floor_height, craters[i].smoothness);
-		crater_shape = smooth_min(crater_shape, rim_shape, craters[i].smoothness);
+        float crater_shape = smooth_max(cavity_shape, craters[i].floor_height, craters[i].smoothness);
+        crater_shape = smooth_min(crater_shape, rim_shape, craters[i].smoothness);
 
         crater_height += crater_shape * craters[i].radius;
     }
