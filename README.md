@@ -10,26 +10,10 @@ All settings can be interacted using ImGUI.
 ## Authors
 
 * Victor Guichard
-* Guillaume Valente
 
 ## Compile
 
-Using cmake to compile.
-
-### Windows
-
-```
-cmake --config Release --build "buildDir"
-```
-
-### Unix
-
-```
-mkdir build
-cd build
-cmake ..
-make
-```
+Use CMake To compile this project
 
 ## Usage
 
