@@ -11,22 +11,26 @@ All settings can be interacted using ImGUI.
 
 * Victor Guichard
 
-## Compile
+## Results
 
-Use CMake To compile this project
+### Noise
 
-## Usage
+![Alt text](images/noise.png?raw=true "Noise Layers")
 
-Run from working folder otherwise assets and shaders won't be found.
+### Craters
 
-### Windows
+![Alt text](images/craters.png?raw=true "Craters Layers")
 
-```
-./[buildDir]/moon_generator.exe
-```
+### Without Textures
 
-### UNIX
+![Alt text](images/missing_texture.png?raw=true "Noise and Crater Layers")
 
-```
-./moon_generator
-```
+### Complete Generation
+
+![Alt text](images/final.png?raw=true "Generated Moon Example")
+
+## Settings / Features
+
+* Basic noise settings can be changed such as lacunarity, number of layers, weight, frequency.
+* Number of craters, craters position, craters dimension repartition and craters smoothness can be changed.
+* Textures are applied using triplanar mapping
