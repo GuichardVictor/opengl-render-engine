@@ -41,7 +41,7 @@ vec3 blendNormal(vec3 normal)
     return blending;
 }
 
-vec4 triplanarMapping (sampler2D texture, vec3 normal, vec3 position, float scale)
+vec4 triplanarMapping (sampler2D texture_sampler, vec3 normal, vec3 position, float scale)
 {
     vec3 normalBlend = blendNormal(normal);
 
@@ -49,9 +49,9 @@ vec4 triplanarMapping (sampler2D texture, vec3 normal, vec3 position, float scal
     center *= scale;
     center += 0.5;
 
-    vec4 x_color = texture2D(texture, center.yz);
-    vec4 y_color = texture2D(texture, center.xz);
-    vec4 z_color = texture2D(texture, center.xy);
+    vec4 x_color = texture(texture_sampler, center.yz);
+    vec4 y_color = texture(texture_sampler, center.xz);
+    vec4 z_color = texture(texture_sampler, center.xy);
 
     return (x_color * normalBlend.x + y_color * normalBlend.y + z_color * normalBlend.z);
 }
