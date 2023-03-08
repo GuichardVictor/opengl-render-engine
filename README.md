@@ -1,6 +1,11 @@
-# POGLA
+# `OpenGL Render Engine`
 
-## Planet Generator
+This is an attempt of 3d rendering engine.
+Many features are implemented and the engine is quite easy to use.
+As a project / example using this engine I've built a procedural moon generator (using compute shaders).
+The example is available under: `src/scenes/custom_scenes/moon/`
+
+## Example: Planet Generator
 
 Generates planets / moon like objects using simplex noise
 and compute shaders.
